@@ -3,7 +3,7 @@
 # Flops = 4.2B
 # Params = 3.8M
 # COCO pre-trained weight link: https://drive.google.com/file/d/10uW7oqZKw231l_tr4C1bJWkbCXgBf7av/view?usp=sharing
-save_dir: workspace/nanodet_g
+save_dir: workspace/rmcv
 model:
   arch:
     name: OneStageDetector
@@ -25,7 +25,7 @@ model:
       num_outs: 3
     head:
       name: NanoDetHead
-      num_classes: 80
+      num_classes: 18
       conv_type: Conv
       activation: LeakyReLU
       input_channel: 128
@@ -53,37 +53,37 @@ model:
 data:
   train:
     name: coco
-    img_path: coco/train2017
-    ann_path: coco/annotations/instances_train2017.json
+    img_path: ../rmcv_yolo/images
+    ann_path: ../rmcv_yolo/annotations/train.json
     input_size: [416,416] #[w,h]
     keep_ratio: True
     pipeline:
-      perspective: 0.0
+      perspective: 0.01
       scale: [0.6, 1.4]
       stretch: [[1, 1], [1, 1]]
       rotation: 0
       shear: 0
       translate: 0.2
       flip: 0.5
-      brightness: 0.2
+      brightness: 0.5
       contrast: [0.6, 1.4]
       saturation: [0.5, 1.2]
       normalize: [[103.53, 116.28, 123.675], [57.375, 57.12, 58.395]]
   val:
     name: coco
-    img_path: coco/val2017
-    ann_path: coco/annotations/instances_val2017.json
+    img_path: ../rmcv_yolo/images
+    ann_path: ../rmcv_yolo/annotations/val.json
     input_size: [416,416] #[w,h]
     keep_ratio: True
     pipeline:
       normalize: [[103.53, 116.28, 123.675], [57.375, 57.12, 58.395]]
 device:
   gpu_ids: [0]
-  workers_per_gpu: 10
-  batchsize_per_gpu: 128
+  workers_per_gpu: 8
+  batchsize_per_gpu: 256
 schedule:
-#  resume:
-#  load_model: YOUR_MODEL_PATH
+ # resume:
+#  load_model: nanodet_g.ckpt
   optimizer:
     name: SGD
     lr: 0.1
@@ -93,12 +93,12 @@ schedule:
     name: linear
     steps: 500
     ratio: 0.01
-  total_epochs: 190
+  total_epochs: 100
   lr_schedule:
     name: MultiStepLR
-    milestones: [130,160,175,185]
+    milestones: [65,80,87,92]
     gamma: 0.1
-  val_intervals: 5
+  val_intervals: 1
 evaluator:
   name: CocoDetectionEvaluator
   save_key: mAP
@@ -106,17 +106,5 @@ evaluator:
 log:
   interval: 10
 
-class_names: ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
-              'train', 'truck', 'boat', 'traffic_light', 'fire_hydrant',
-              'stop_sign', 'parking_meter', 'bench', 'bird', 'cat', 'dog',
-              'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe',
-              'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
-              'skis', 'snowboard', 'sports_ball', 'kite', 'baseball_bat',
-              'baseball_glove', 'skateboard', 'surfboard', 'tennis_racket',
-              'bottle', 'wine_glass', 'cup', 'fork', 'knife', 'spoon', 'bowl',
-              'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot',
-              'hot_dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
-              'potted_plant', 'bed', 'dining_table', 'toilet', 'tv', 'laptop',
-              'mouse', 'remote', 'keyboard', 'cell_phone', 'microwave',
-              'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock',
-              'vase', 'scissors', 'teddy_bear', 'hair_drier', 'toothbrush']
+class_names: ['R1', 'B1', 'R2', 'B2', 'R3', 'B3', 'R4', 'B4','R5', 'B5', 'R7', 'B7', 'R10', 'B10', 'R11', 'B11', 'RE', 'BE']
+

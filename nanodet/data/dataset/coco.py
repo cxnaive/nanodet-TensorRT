@@ -115,6 +115,8 @@ class CocoDataset(BaseDataset):
             print('image {} read failed.'.format(image_path))
             raise FileNotFoundError('Cant load image! Please check image path!')
         ann = self.get_img_annotation(idx)
+        #apply mosaic
+        
         meta = dict(img=img,
                     img_info=img_info,
                     gt_bboxes=ann['bboxes'],
