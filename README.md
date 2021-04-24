@@ -139,7 +139,7 @@ Besides, We provide a notebook [here](./demo/demo-inference-with-pytorch.ipynb) 
 2. Install pytorch
 
 ```shell script
-conda install pytorch torchvision cudatoolkit=11.1 -c pytorch
+conda install pytorch torchvision cudatoolkit=11.1 -c pytorch -c conda-forge
 ```
 
 3. Install requirements
@@ -251,10 +251,10 @@ NanoDet provide C++ and Android demo based on ncnn library.
 
     To convert NanoDet pytorch model to ncnn, you can choose this way: pytorch->onnx->ncnn
 
-    To export onnx model, run `tools/export.py`.
+    To export onnx model, run `tools/export_onnx.py`.
 
     ```shell script
-    python tools/export.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}
+    python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}
     ```
 
     Then using [onnx-simplifier](https://github.com/daquexian/onnx-simplifier) to simplify onnx structure.
