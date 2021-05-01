@@ -1,8 +1,8 @@
 ![](docs/imgs/Title.jpg)
 
 ## 修改说明
-* 基于原版Nanodet修改，加入mosaic,mixup数据增强，删除contrast、brightness、saturation数据增强，添加gamma调整、hsv调整数据增强。默认关闭normalize，需要开启的可以自行修改nanodet/data/transform/color.py
-* 修改了导出onnx逻辑，聚合了输出层。预测代码参见 https://github.com/linghu8812/tensorrt_inference/tree/master/nanodet 原repo #65 issue
+* 基于原版Nanodet修改，加入mosaic,mixup数据增强，删除contrast、brightness、saturation数据增强，添加gamma调整、hsv调整数据增强。关闭normalize，需要开启的可以自行修改nanodet/data/transform/color.py。在config目录下有修改后的配置文件。
+* 修改了导出onnx逻辑，聚合了输出层。预测代码可参考 https://github.com/linghu8812/tensorrt_inference/tree/master/nanodet （注意：如果没有打开normalize，需要修改预处理部分代码）原repo #65 issue
 * 原repo https://github.com/RangiLyu/nanodet
 
 # NanoDet
