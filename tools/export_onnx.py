@@ -26,8 +26,8 @@ def main(config, model_path, output_path, input_shape=(320, 320)):
         model = repvgg_det_model_convert(model, deploy_model)
     dummy_input = torch.autograd.Variable(torch.randn(1, 3, input_shape[0], input_shape[1]))
     output_names = None
-    if config.model.arch.head.name == 'NanoDetHead':
-        output_names = generate_ouput_names(config.model.arch.head)
+    # if config.model.arch.head.name == 'NanoDetHead':
+    #     output_names = generate_ouput_names(config.model.arch.head)
     torch.onnx.export(model,
                       dummy_input,
                       output_path,

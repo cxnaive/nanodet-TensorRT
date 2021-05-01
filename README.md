@@ -1,5 +1,10 @@
 ![](docs/imgs/Title.jpg)
 
+## 修改说明
+* 基于原版Nanodet修改，加入mosaic,mixup数据增强，删除contrast、brightness、saturation数据增强，添加gamma调整、hsv调整数据增强。默认关闭normalize，需要开启的可以自行修改nanodet/data/transform/color.py
+* 修改了导出onnx逻辑，聚合了输出层。
+* 原repo https://github.com/RangiLyu/nanodet
+
 # NanoDet
 [![GitHub license](https://img.shields.io/github/license/RangiLyu/nanodet?style=flat-square)](https://github.com/RangiLyu/nanodet/blob/main/LICENSE)  ![GitHub release (latest by date)](https://img.shields.io/github/v/release/RangiLyu/nanodet?style=flat-square)
 
@@ -12,7 +17,6 @@
 
 ****
 ## NEWS!!!
-
 * [2021.03.12] Apply the **Transformer** encoder to NanoDet! Introducing **NanoDet-t**, which replaces the PAN in NanoDet-m with a **TAN(Transformer Attention Net)**,  gets 21.7 mAP(+1.1) on COCO val 2017. Check [nanodet-t.yml](config/Transformer/nanodet-t.yml) for more details.
 
 * [2021.03.03] Update **Nanodet-m-416** COCO pretrained model. **COCO mAP(0.5:0.95)=23.5**. Download in [Model Zoo](#model-zoo).

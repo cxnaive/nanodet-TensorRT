@@ -3,7 +3,7 @@
 # Flops = 4.2B
 # Params = 3.8M
 # COCO pre-trained weight link: https://drive.google.com/file/d/10uW7oqZKw231l_tr4C1bJWkbCXgBf7av/view?usp=sharing
-save_dir: workspace/rmcv
+save_dir: workspace/rmcv1
 model:
   arch:
     name: OneStageDetector
@@ -57,17 +57,20 @@ data:
     ann_path: ../rmcv_yolo/annotations/train.json
     input_size: [416,416] #[w,h]
     keep_ratio: True
+    load_mosaic: True
+    mixup: True
     pipeline:
-      perspective: 0.01
-      scale: [0.6, 1.4]
+      perspective: 0.0002
+      scale: [0.5, 1.5]
       stretch: [[1, 1], [1, 1]]
-      rotation: 0
-      shear: 0
-      translate: 0.2
+      rotation: 5
+      shear: 3
+      gamma: [0.5,1.7]
+      translate: 0.1
       flip: 0.5
-      brightness: 0.5
-      contrast: [0.6, 1.4]
-      saturation: [0.5, 1.2]
+      hsv_h: 0.0138
+      hsv_s: 0.464
+      hsv_v: 0.464
       normalize: [[103.53, 116.28, 123.675], [57.375, 57.12, 58.395]]
   val:
     name: coco
@@ -79,24 +82,24 @@ data:
       normalize: [[103.53, 116.28, 123.675], [57.375, 57.12, 58.395]]
 device:
   gpu_ids: [0]
-  workers_per_gpu: 8
-  batchsize_per_gpu: 256
+  workers_per_gpu: 4
+  batchsize_per_gpu: 128
 schedule:
- # resume:
-#  load_model: nanodet_g.ckpt
+  # resume:
+  load_model: model_0.01.ckpt
   optimizer:
     name: SGD
-    lr: 0.1
-    momentum: 0.9
-    weight_decay: 0.0001
+    lr: 0.003
+    momentum: 0.843
+    weight_decay: 0.00036
   warmup:
     name: linear
     steps: 500
     ratio: 0.01
-  total_epochs: 100
+  total_epochs: 50
   lr_schedule:
     name: MultiStepLR
-    milestones: [65,80,87,92]
+    milestones: [30,45]
     gamma: 0.1
   val_intervals: 1
 evaluator:
